@@ -1,16 +1,27 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Logs.css'
+import gif from '../../imgs/birdwalk.gif'
 
 const Logs = () => {
-  const [clase, setClase] = useState(false);
+  useEffect(() => {
+    setDuck(localStorage.getItem('myKey') === 'duck' || false);
+  }, []);
+  const [duck, setDuck] = useState(true)
+  const [clase, setClase] = useState(false)
   const [registros, setRegistros] = useState(() => {
     const registrosGuardados = localStorage.getItem('registros');
     if( typeof(registrosGuardados) === 'string'){
-      setClase(true)
+      setClase(false)
+      setDuck(false)
     }
     return typeof registrosGuardados === 'string' ? JSON.parse(registrosGuardados) : [];
   });
+
   const divRegistrosRef = useRef(null);
+
+  if (localStorage.getItem === 'duck') {
+    setDuck(true)
+  } 
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -20,6 +31,8 @@ const Logs = () => {
       setRegistros([...registros, { hora: horaActual, texto: textoActual }]);
       event.target.value = '';
       setClase(true)
+      setDuck(false)
+      localStorage.removeItem('myKey');
     }
   }
 
@@ -32,13 +45,24 @@ const Logs = () => {
   }, [registros]);
 
   const handleBorrarClick = () => {
+    registros === [] ? console.log('vacio') : console.log(123)
     localStorage.removeItem('registros');
     setRegistros([]);
+    setClase(false);
+    setDuck(true)
+    localStorage.setItem('myKey', 'duck');
+
+    divRegistrosRef.current.scrollTop = 0;
+      if (divRegistrosRef.current.classList.contains('divRegistrosVacio')) {
+        divRegistrosRef.current.classList.remove('divRegistrosVacio');
+  }
   };
+
+  
 
   return (
     <div className='logsContainer'>
-      <div ref={divRegistrosRef} className='divRegistros' contentEditable={true}>
+      <div ref={divRegistrosRef} className={`divRegistros ${registros.length === 0 ? 'divRegistrosVacio' : ''}`} contentEditable={true} >
         {registros.map((registro, index) => (
           <p className='registros' key={index}>
             <b>{registro.hora}</b> {registro.texto}
@@ -46,10 +70,16 @@ const Logs = () => {
         ))}
       </div>
       <div className= {clase ? 'divTextAreaInit' : 'divTextArea'}>
-        <h1>Registro de eventos</h1>
-        <textarea className='textarealogs' rows='10' cols='50' onKeyDown={handleKeyDown} placeholder='Escribe algo aqui!'/>
-        <button onClick={handleBorrarClick}>Borrar registros</button>
+        <h1 className='registrodeeventos'>EVENT LOGS:</h1>
+        <div className='divtextduck'>
+
+          <textarea className='textarealogs' rows='10' cols='50' onKeyDown={handleKeyDown} placeholder='Write something here!'/>
+          <img className= {duck ? 'duck' : 'byeDuck'} src={gif} alt='bird walking gif'></img>
+        </div>
+        <button className="botonBorrar" onClick={handleBorrarClick}>Clean All</button>
       </div>
+      
+      
     </div>
   );
 }

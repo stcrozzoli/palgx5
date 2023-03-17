@@ -2,7 +2,7 @@ import { useState } from "react";
 import './Generator.css'
 
 const Generator = () => {
-    let contrasena = "Aquí ira tu contraseña";
+    let contrasena = "Your password";
     const [pass, setPass] = useState(contrasena)
     let caracteres = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
@@ -33,13 +33,6 @@ const Generator = () => {
             }
         } 
 
-
-
-
-
-
-
-
         for (let i = 0; i < maxcaract; i++) {
             setPass(contrasena += caracteres.charAt(Math.floor(Math.random() * caracteres.length)))
         }
@@ -51,7 +44,7 @@ const Generator = () => {
         <div className="generatorContainer">
             <div className="options">
                 <div>
-                <label className="labels" htmlFor="opciones">Cantidad de caracteres: </label>
+                <label className="labels" htmlFor="opciones">Number of characters: </label>
                 <select id="opciones" defaultValue={12}>
                     <option value="6">6</option>
                     <option value="7">7</option>
@@ -66,21 +59,21 @@ const Generator = () => {
                 </select>
                 </div>
                 <div>
-                <label className="labels" htmlFor="tipos">Tipos de caracteres: </label>
+                <label className="labels" htmlFor="tipos">Character types: </label>
                 <select id="tipos" defaultValue={'Números y letras'}>
-                    <option value="Números y letras">Números y letras</option>
-                    <option value="Solo letras">Solo letras</option>
-                    <option value="Solo números">Solo números</option>
+                    <option value="Números y letras">Numbers and letters</option>
+                    <option value="Solo letras">Only letters</option>
+                    <option value="Solo números">Only numbers</option>
        
                 </select>
                 </div>
 
                 <div>
-                <label className="labels" htmlFor="mayusculas">Mayúsculas y minúsculas: </label>
+                <label className="labels" htmlFor="mayusculas">Upper and lower case: </label>
                 <select id="mayusculas" defaultValue={'Incluir ambas'}>
-                    <option value="Incluir ambas">Incluir ambas</option>
-                    <option value="Solo mayúsculas">Solo mayúsculas</option>
-                    <option value="Solo minúsculas">Solo minúsculas</option>
+                    <option value="Incluir ambas">Both</option>
+                    <option value="Solo mayúsculas">Capital letters only</option>
+                    <option value="Solo minúsculas">Only lowercase</option>
        
                 </select>
                 </div>
@@ -90,7 +83,7 @@ const Generator = () => {
                 <h2 id='h2pass'>{pass}</h2>
             </div>
             <div>
-                <button id="botonako" onClick={generarContrasena}>Generar!</button>
+                <button id="botonako" onClick={generarContrasena}>Generate!</button>
             </div>
         </div>
     )
