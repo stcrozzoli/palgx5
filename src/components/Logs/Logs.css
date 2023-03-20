@@ -35,7 +35,8 @@ div.registro{
     min-width: 400px;
     overflow-wrap: break-word;
     word-break: break-all;
-    max-height: 400px;
+    height: 350px;
+    max-height: 350px;
     overflow-y: scroll;
     background: linear-gradient(to bottom, #00eeff3d 50%, #e45bff52 100%);
     background-color: rgba(218, 72, 255, 0.253);

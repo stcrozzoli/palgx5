@@ -3,9 +3,11 @@ import './Logs.css'
 import gif from '../../imgs/birdwalk.gif'
 
 const Logs = () => {
+
   useEffect(() => {
     setDuck(localStorage.getItem('myKey') === 'duck' || false);
   }, []);
+
   const [duck, setDuck] = useState(true)
   const [clase, setClase] = useState(false)
   const [registros, setRegistros] = useState(() => {
@@ -45,6 +47,7 @@ const Logs = () => {
   }, [registros]);
 
   const handleBorrarClick = () => {
+    if(duck)return
     registros === [] ? console.log('vacio') : console.log(123)
     localStorage.removeItem('registros');
     setRegistros([]);
@@ -62,7 +65,7 @@ const Logs = () => {
 
   return (
     <div className='logsContainer'>
-      <div ref={divRegistrosRef} className={`divRegistros ${registros.length === 0 ? 'divRegistrosVacio' : ''}`} contentEditable={true} >
+      <div ref={divRegistrosRef} className={`divRegistros ${registros.length === 0 ? 'divRegistrosVacio' : ''}`}  >
         {registros.map((registro, index) => (
           <p className='registros' key={index}>
             <b>{registro.hora}</b> {registro.texto}
@@ -73,7 +76,7 @@ const Logs = () => {
         <h1 className='registrodeeventos'>EVENT LOGS:</h1>
         <div className='divtextduck'>
 
-          <textarea className='textarealogs' rows='10' cols='50' onKeyDown={handleKeyDown} placeholder='Write something here!'/>
+          <textarea className='textarealogs' rows='10' cols='50' onKeyDown={handleKeyDown} placeholder='Write here and enter!'/>
           <img className= {duck ? 'duck' : 'byeDuck'} src={gif} alt='bird walking gif'></img>
         </div>
         <button className="botonBorrar" onClick={handleBorrarClick}>Clean All</button>
